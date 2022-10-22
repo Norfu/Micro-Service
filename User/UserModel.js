@@ -13,7 +13,7 @@ mongoose.model("User",{
         type: String,
         require : true,
         validate(v){
-            if(!validator.isLenght(v, {min : 4, max : 20})) throw new Error('Le mot de passe doit contenir entre 4 et 20 caractères')
+            if(!validator.isLength(v, {min : 4, max : 20})) throw new Error('Le mot de passe doit contenir entre 4 et 20 caractères')
         }
         
     },

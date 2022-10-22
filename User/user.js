@@ -26,10 +26,12 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
 
 //Create User
 
-app.post("/register",(req,res) => {
+app.post("/register",(req,res,next) => {
     var newUser = {
-        name: req.body.title,
-        adress: req.body.adress
+        email: req.body.email,
+        password:req.body.password,        
+        sold : req.body.sold,
+        adress : req.body.adress
     }
     //Create a new User
     var user = new User(newUser)
@@ -40,12 +42,51 @@ app.post("/register",(req,res) => {
     }).catch((err) =>{
         if(err){
             res.status(403);
-            throw err;
+            next(err);
         }
     }
     
 )})
 
+//recuperer la liste des users
+app.get("/users", (req,res)=>{
+    User.find().then((users)=>{
+        res.json(users)
+    }).catch(err => {
+        if(err){
+            throw err;
+        }
+    })
+})
+
+
+//recuperer un seul user
+app.get("/user/:id",(req,res,next)=>{
+    User.findById(req.params.id).then((user)=>{
+        if(user){
+            
+            res.json(user)
+        }else{
+            res.sendStatus(404);
+        }
+    }).catch(err => {
+        if(err){
+            next("id invalid");
+        }
+    })
+})
+
+//Delete user
+
+app.delete("/user/:id",(req,res) =>{
+    User.findOneAndDelete(req.params.id).then(()=>{
+        res.send("User removed with success !")
+    }).catch( err => {
+        if(err){
+            throw err;
+        }
+    })
+})
 app.listen(3000, () => {
     console.log("Server running !");
 })
