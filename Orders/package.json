@@ -1,0 +1,23 @@
+{
+  "name": "orders",
+  "version": "1.0.0",
+  "description": "micro service orders",
+  "main": "order.js",
+  "scripts": {
+    "start": "nodemon order.js"
+  },
+  "keywords": [
+    "microService",
+    "orders"
+  ],
+  "author": "Quentin DESTEFANIS",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.6.7",
+    "nodemon": "^2.0.20",
+    "validator": "^13.7.0"
+  }
+}
