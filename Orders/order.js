@@ -17,7 +17,7 @@ require('./OrderModel')
 const Order =  mongoose.model("Order") //mongoose connais Order grace a OrderModel.js donc pas besoin de Schema
 
 //Connection a mongoDB
-mongoose.connect(process.env.MONGO_URL).then(() => {
+mongoose.connect('mongodb+srv://qdestefanis:123test@cluster0.poet56y.mongodb.net/DBOrders?retryWrites=true&w=majority').then(() => {
     console.log("Co to the db");
 }).catch((err)=>{
     console.log("not co to the db",err);

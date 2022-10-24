@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="index.js" defer></script>
+    <link href="index.css" rel="stylesheet"/>
+    <title>Document</title>
+</head>
+
+<body>
+   <ul>
+    <li> <a href="userPage.html">S'enregistrer</a> </li>
+    <li><a href="productPage.html">Liste des produits</a> </li>
+    <li><a href="orderPage.html">Liste des commandes</a></li>
+   </ul> 
+    <h1> Register</h1>
+    <input type="email" id="email" required>
+    <input type="password" id="password" required>
+    <input type="text" id="address" required>
+    <button onclick="insertUser()">
+        <p>register</p>
+    </button>
+
+    <div id="error"></div>
+</body>
+</html>

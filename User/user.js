@@ -1,6 +1,7 @@
 //Module
 const express = require('express');
 require('dotenv').config() // Pas vraiment nécessaire mais plus sécurisé
+const cors = require('cors')
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser"); //c'est un middle-ware
 const { restart } = require('nodemon');
@@ -9,14 +10,14 @@ const app = express();
 
 
 //Permet de changer une chaine de string en JSON 
-app.use(bodyParser.json());
+app.use(bodyParser.json()).use(cors());
 
 //On recuper le model de UserModel.js
 require('./UserModel')
 const User =  mongoose.model("User") //mongoose connais User grace a UserModel.js donc pas besoin de Schema
  //Nom de la collection dans mongoDB ;; collection == table en SQl
 //Connection a mongoDB
-mongoose.connect(process.env.MONGO_URL).then(() => {
+mongoose.connect('mongodb+srv://qdestefanis:123test@cluster0.poet56y.mongodb.net/DBUser?retryWrites=true&w=majority').then(() => {
     console.log("Co to the db");
 }).catch((err)=>{
     console.log("not co to the db",err);
@@ -41,7 +42,7 @@ app.post("/register",(req,res,next) => {
         res.status(200).end()
     }).catch((err) =>{
         if(err){
-            res.status(403);
+            res.status(400);
             next(err);
         }
     }
