@@ -41,7 +41,7 @@ const getProduct = () => {
         let buyButton = document.createElement('button');
         buyButton.innerText = "Achetez !";
         buyButton.addEventListener('click', function (event) {
-
+          getOrder(product)
         })
         productElement.appendChild(buyButton);
         document.getElementById('product').appendChild(productElement);
