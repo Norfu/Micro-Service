@@ -30,7 +30,7 @@ app.post("/register",(req,res,next) => {
     var newUser = {
         email: req.body.email,
         password:req.body.password,        
-        sold : req.body.sold,
+        sold : 500,
         adress : req.body.adress
     }
     //Create a new User
@@ -88,6 +88,29 @@ app.delete("/user/:id",(req,res) =>{
     })
 })
 
+//modifier sold de l'utilisateur
+app.put("/user/:id/sold",(req,res) => {
+    User.findOneAndUpdate(req.params.id).then((user)=>{
+        if(!user){
+            return res.status(404).send('User not found')
+        }else{ 
+        const userUpdate ={            
+            sold : req.body.sold            
+        }
+        user = Object.assign(user,userUpdate)
+        user.save().then(() =>{
+            console.log("user sold updated")
+            res.status(200);
+        }).catch(err =>{
+            console.log(err)
+            res.status(400)
+            next(err);
+        })
+
+
+        }
+    })
+})
 //Pour simuler une authentification
 app.post("/auth",(req,res)=>{
    User.findOne({email:req.body.email , password: req.body.password},(err,doc) =>{
@@ -96,7 +119,7 @@ app.post("/auth",(req,res)=>{
             res.send(err);
             console.log(err);
         }else{
-            res.sendStatus(200);
+            
             res.json(doc);
             console.log(doc)
         }

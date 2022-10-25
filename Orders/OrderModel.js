@@ -10,9 +10,17 @@ mongoose.model("Order",{
         type: mongoose.SchemaTypes.ObjectId,
         require: true
     },
+    Price :{
+        type: Number,
+        require : true,
+    },
     buyDate:{
         type: Date,
         require : true,       
         
+    },
+    Sold:{
+        type:Number,
+        require : true
     }
 })

@@ -2,6 +2,7 @@
 const express = require('express');
 require('dotenv').config(); // Pas vraiment nécessaire mais plus sécurisé
 const mongoose = require("mongoose");
+const cors = require('cors');
 const bodyParser = require("body-parser"); //c'est un middle-ware
 const { restart } = require('nodemon');
 const axios = require("axios");
@@ -10,7 +11,7 @@ const app = express();
 
 
 //Permet de changer une chaine de string en JSON 
-app.use(bodyParser.json());
+app.use(bodyParser.json()).use(cors());
 
 //On recuper le model de OrderModel.js
 require('./OrderModel')
@@ -30,14 +31,29 @@ app.post("/order/new",(req,res) => {
     var newOrder = {
         UserID : req.body.UserID,
         ProductID : req.body.ProductID,
-        buyDate : req.body.buyDate
+        buyDate : req.body.buyDate,
+        Sold : req.body.Sold,
+        soldUser : req.body.soldUser
     }
+    let newSoldUser = req.body.soldUser - req.body.Sold;
+    if(newSoldUser < 0){
+        res.status(400).send("Not enough money")
+        return
+    }
+    delete newOrder.soldUser
     //Create a new Order
     var order = new Order(newOrder)
     order.save().then(() => {
+        const soldUpdate = {sold : newSoldUser};
+        axios.put(`http://localhost:3000/${order.UserID}/sold`, soldUpdate) //A corriger
+        .then((res) => {
+            console.log("sold updated");
+        }).catch(err => console.log(err))
+
         console.log("Order Created")
         res.send("Order created")
         res.status(200).end()
+
     }).catch((err) =>{
         if(err){
             res.status(403);

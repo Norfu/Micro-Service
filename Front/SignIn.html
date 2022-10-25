@@ -5,21 +5,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="index.js" defer></script>
     <link href="index.css" rel="stylesheet"/>
-    <script src="index.js" defer>       
-    </script>
     <title>Document</title>
 </head>
 
-<body onload="loadOnProductPage()">
+<body onload="getSignedIn()">
    <ul class="menu" id="menu">
     <li> <a href="userPage.html">S'enregistrer</a> </li>
     <li><a href="productPage.html">Liste des produits</a> </li>
-    <li><a href="orderPage.html">Liste des commandes</a></li>
+    <li><a href="orderPage.html">Liste des commandes</a></li>    
    </ul> 
-
-    <h1> Product </h1>
-    <ul id="product"></ul>
+    <h1> Sign in</h1>
+    <input type="email" id="email" required>
+    <input type="password" id="password" required>
+    <button onclick="auth()">
+        <p>Sign in</p>
+    </button>
 
     <div id="error"></div>
 </body>
