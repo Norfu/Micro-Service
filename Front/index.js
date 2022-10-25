@@ -125,6 +125,8 @@ const setOrder = (product) =>{
       soldUser : userParsed.sold
     })
   }).then(res => {    
+    user.sold = user.sold - product.price;
+    localStorage.setItem("user",user);
     console.log(res);
     return res.text()
   }).catch(err => {

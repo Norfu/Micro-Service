@@ -45,10 +45,10 @@ app.post("/order/new",(req,res) => {
     var order = new Order(newOrder)
     order.save().then(() => {
         const soldUpdate = {sold : newSoldUser};
-        axios.put(`http://localhost:3000/${order.UserID}/sold`, soldUpdate) //A corriger
-        .then((res) => {
+        axios.put(`http://localhost:3000/user/${order.UserID}/sold`, soldUpdate) //n'est pas au points
+        .then(() => {
             console.log("sold updated");
-        }).catch(err => console.log(err))
+        }).catch(() => console.log("sold update failed"))
 
         console.log("Order Created")
         res.send("Order created")

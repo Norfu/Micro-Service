@@ -79,7 +79,7 @@ app.get("/user/:id",(req,res,next)=>{
 //Delete user
 
 app.delete("/user/:id",(req,res) =>{
-    User.findOneAndDelete(req.params.id).then(()=>{
+    User.findByIdAndDelete(req.params.id).then(()=>{
         res.send("User removed with success !")
     }).catch( err => {
         if(err){
@@ -88,29 +88,38 @@ app.delete("/user/:id",(req,res) =>{
     })
 })
 
-//modifier sold de l'utilisateur
+//modifier sold de l'utilisateur (n'est pas au point)
 app.put("/user/:id/sold",(req,res) => {
-    User.findOneAndUpdate(req.params.id).then((user)=>{
-        if(!user){
-            return res.status(404).send('User not found')
-        }else{ 
-        const userUpdate ={            
-            sold : req.body.sold            
+    User.findByIdAndUpdate(req.params.id,{sold : req.body.sold},{new : true},(err,doc)=>{
+        if(err){
+            console.log("sold not updated")
+            res.sendStatus(400).send(err)
+        }else{
+            console.log("sold updated back end")
+            res.sendStatus(200)
         }
-        user = Object.assign(user,userUpdate)
-        user.save().then(() =>{
-            console.log("user sold updated")
-            res.status(200);
-        }).catch(err =>{
-            console.log(err)
-            res.status(400)
-            next(err);
-        })
+        console.log(doc);
+
+    })})
+        //     return res.status(404).send('User not found')
+        // }else{ 
+        // const userUpdate ={            
+        //     sold : req.body.sold            
+        // }
+        // user = Object.assign(user,userUpdate)
+        // user.save().then(() =>{
+        //     console.log("user sold updated")
+        //     res.status(200);
+        // }).catch(err =>{
+        //     console.log(err)
+        //     res.status(400)
+        //     next(err);
+        // })
 
 
-        }
-    })
-})
+        
+    
+
 //Pour simuler une authentification
 app.post("/auth",(req,res)=>{
    User.findOne({email:req.body.email , password: req.body.password},(err,doc) =>{

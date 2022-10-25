@@ -2,9 +2,9 @@
 const express = require('express');
 require('dotenv').config() // Pas vraiment nécessaire mais plus sécurisé
 const mongoose = require("mongoose")
-const cors = require('cors');
 const bodyParser = require("body-parser"); //c'est un middle-ware
 const { restart } = require('nodemon');
+const cors = require('cors')
 //instanciation d'express
 const app = express();
 
