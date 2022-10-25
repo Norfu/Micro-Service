@@ -1,6 +1,5 @@
 //Module
 const express = require('express');
-require('dotenv').config() // Pas vraiment nécessaire mais plus sécurisé
 const cors = require('cors')
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser"); //c'est un middle-ware
@@ -87,6 +86,21 @@ app.delete("/user/:id",(req,res) =>{
             throw err;
         }
     })
+})
+
+//Pour simuler une authentification
+app.post("/auth",(req,res)=>{
+   User.findOne({email:req.body.email , password: req.body.password},(err,doc) =>{
+        if(err){
+            res.sendStatus(400);
+            res.send(err);
+            console.log(err);
+        }else{
+            res.sendStatus(200);
+            res.json(doc);
+            console.log(doc)
+        }
+   });
 })
 app.listen(3000, () => {
     console.log("Server running !");
